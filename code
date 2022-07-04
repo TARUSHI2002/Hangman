@@ -1,0 +1,221 @@
+use strict;
+use warnings;
+use feature ":5.10";
+my @words  = ("computer","radio","calculator","teacher","bureau","police","geometry","president","subject","country","environment",
+"classroom","animals","province","month","politics","puzzle","instrument","kitchen","language","vampire","ghost","solution",
+"service","software","security","phonenumber","expert","website","agreement","support","compatibility","advanced","search",
+"triathlon","immediately","encyclopedia","endurance","distance","nature","history","organization","international","championship",
+"government","popularity","thousand","feature","wetsuit","fitness","legendary","variation","equal","approximately","segment",
+"priority","physics","branche","science","mathematics","lightning","dispersion","accelerator","detector","terminology","design",
+"operation","foundation","application","prediction","reference","measurement","concept","perspective","overview","position",
+"airplane","symmetry","dimension","toxic","algebra","illustration","classic","verification","citation","unusual","resource","analysis",
+"license","comedy","screenplay","production","release","emphasis","director","trademark","vehicle","aircraft","experiment","tally");
+my $word = $words [int(rand(100))];;
+my $size = length($word);
+my $i = 0;
+my $count = 0;
+my @word_to_guess = ();
+my @incorrect = ();
+while($i<$size){
+    $word_to_guess[$i]='-';
+    $i++;
+}
+while($count<6){
+    print "Here is your word that you need to guess: ";
+    print @word_to_guess;
+    print "\n";
+    print "Incorrect guesses so far: ";
+    print "@incorrect";
+    print "\n";
+    print "Make a guess: ";
+    my $letter = <>;
+    chomp($letter);
+    $letter = lc($letter);
+    my $var1 = is_Valid($letter);
+    if($var1==1){
+        my $var2=is_contain($letter);
+    if($var2==1){
+        print "Good Guess\n";
+        add($letter);
+    }
+    else{
+        print "Bad Guess\n";
+        push (@incorrect,$letter);
+        $count++;
+    }
+    PRINT($count);
+    }
+    else{
+        print "You already made this guess!\n";
+    }
+    my $var3=check_win();
+    if($var3==1){
+        print "YOU WON!The word was $word\n";
+        exit(0);
+    }
+}
+if($count==6){
+    print "You lost!The word was $word\n";
+}
+sub is_Valid{
+    my ($a) = @_;
+    my $guess_len = @incorrect;
+    my $index1=0;
+    while($index1<$guess_len){
+        my $mychar = $incorrect[$index1];
+        if($mychar eq $a){
+           return 0; 
+        }
+        else{
+            $index1++;}
+    }
+    my $index2=0;
+    while($index2<$size){
+        my $mychar = $word_to_guess[$index2];
+        if($mychar eq $a){
+            return 0;
+        }
+        else {$index2++;}
+    }
+    return 1;
+}
+sub is_contain{
+    my ($char)=@_;
+    my $index=0;
+    while($index<$size){
+        my $mychar=substr($word,$index,1);
+        if($mychar eq $char){
+            return 1;
+        }
+        $index++;
+    }
+    return 0;
+}
+sub add{
+    my ($char) = @_;
+    my $index=0;
+    while($index<$size){
+        my $mychar = substr($word,$index,1);
+        if($mychar eq $char){
+            $word_to_guess[$index] = $char;
+        }
+        $index++;
+    }
+}
+sub PRINT{
+    my ($c) = @_;
+    if($c eq '0'){
+        print "+----+--- \n";
+        print "|    | \n";
+        print "|\n";
+        print "|\n";
+        print "|\n";
+        print "|\n";
+        print "|\n";
+        print "|\n";
+        print "|\n";
+        print "|\n";
+        print "|\n";
+        print "|\n";
+        print "=============\n";
+    }
+    elsif($c==1){
+        print "+----+--- \n";
+        print "|    | \n";
+        print "|    O \n";
+        print "|  \n";
+        print "| \n";
+        print "|\n";
+        print "|\n";
+        print "|\n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "=============\n";
+    }
+    elsif($c==2){
+        print "+----+--- \n";
+        print "|    | \n";
+        print "|    O \n";
+        print "|    |  \n";
+        print "|    | \n";
+        print "|    | \n";
+        print "|    | \n";
+        print "|    |  \n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "=============\n";
+    }
+    elsif($c==3){
+        print "+----+--- \n";
+        print "|    | \n";
+        print "|    O \n";
+        print "|  \\ |\n";
+        print "|   \\|\n";
+        print "|    | \n";
+        print "|    | \n";
+        print "|    |  \n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "=============\n";
+    }
+    elsif($c==4){
+        print "+----+--- \n";
+        print "|    | \n";
+        print "|    O \n";
+        print "|  \\ | / \n";
+        print "|   \\|/ \n";
+        print "|    | \n";
+        print "|    | \n";
+        print "|    |  \n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "=============\n";
+    }
+    elsif($c==5){
+        print "+----+--- \n";
+        print "|    | \n";
+        print "|    O \n";
+        print "|  \\ | / \n";
+        print "|   \\|/ \n";
+        print "|    | \n";
+        print "|   /| \n";
+        print "|  / |  \n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "=============\n";
+    }
+    else{
+        print "+----+--- \n";
+        print "|    | \n";
+        print "|    O \n";
+        print "|  \\ | / \n";
+        print "|   \\|/ \n";
+        print "|    | \n";
+        print "|   /|\\\n";
+        print "|  / | \\\n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "| \n";
+        print "=============\n";
+    }
+}
+sub check_win{
+    my $i;
+    for($i=0;$i<$size;$i++){
+        if($word_to_guess[$i] ne substr($word,$i,1)){
+            return 0;
+        }
+    }
+    return 1;
+}
